@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Dashboard - Oxygen Lab Referral System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --kbth-green: #007A33; /* Dark green from the logo */
+            --kbth-blue: #004B8D;  /* Dark blue from the logo */
+            --kbth-red: #E30613;   /* Red from the logo */
+            --kbth-light-gray: #F8F9FA; /* Light background */
+            --kbth-dark-text: #343A40; /* Dark text */
+            --kbth-medium-text: #6C757D; /* Medium gray text */
+        }
+
+        .bg-kbth-light-gray {
+            background-color: var(--kbth-light-gray);
+        }
+        .bg-kbth-green {
+            background-color: var(--kbth-green);
+        }
+        .bg-kbth-blue {
+            background-color: var(--kbth-blue);
+        }
+        .bg-kbth-red {
+            background-color: var(--kbth-red);
+        }
+        .text-kbth-green {
+            color: var(--kbth-green);
+        }
+        .text-kbth-blue {
+            color: var(--kbth-blue);
+        }
+        .text-kbth-red {
+            color: var(--kbth-red);
+        }
+        .text-kbth-dark-text {
+            color: var(--kbth-dark-text);
+        }
+        .text-kbth-medium-text {
+            color: var(--kbth-medium-text);
+        }
+        .border-kbth-subtle {
+            border-color: #DEE2E6;
+        }
+        .shadow-kbth {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 220px;
+                min-width: 220px;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .content-area {
+                margin-left: 0;
+            }
+        }
+        body{
+            zoom:90%;
+        }
+    </style>
+</head>
+<body class="bg-kbth-light-gray font-sans flex">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-white rounded-lg shadow-kbth flex flex-col h-screen m-4 p-6">
+        <div class="flex items-center mb-10">
+            <img src="./assets/kbth_logo.png" alt="KBTH Logo" class="h-10 w-10 mr-3 rounded-full">
+            <span class="text-2xl font-bold text-kbth-dark-text">Oxygen Lab</span>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <ul>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-dark-text bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 mr-4 text-kbth-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6a2 2 0 012-2h2zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2a2 2 0 012-2h2z"></path></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-8v8m-4-8v8M4 16h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        System Performance
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                        User Management
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a4 4 0 00-4-4H9a4 4 0 00-4 4v1z"></path></svg>
+                        System Configurations
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200 relative">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h10M14 6H9a2 2 0 00-2 2v4a2 2 0 002 2h5l4 4V7a2 2 0 00-2-2z"></path></svg>
+                        Audit Logs
+                    </a>
+                </li>
+            </ul>
+            <ul class="mt-8 pt-8 border-t border-gray-200 space-y-2">
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                       Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-kbth p-5 mb-8 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-kbth-dark-text">Super Admin Dashboard</h1>
+            <div class="flex items-center flex-1 justify-end space-x-6">
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" placeholder="Search" class="w-full py-2 pl-10 pr-4 rounded-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-200 text-lg">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <img src="./assets/avatar.jpg" alt="User Avatar" class="h-12 w-12 rounded-full border-2 border-kbth-blue">
+                    <div class="text-right">
+                        <p class="font-semibold text-lg text-kbth-dark-text">Prof. Osei</p>
+                        <p class="text-sm text-kbth-medium-text">@superadmin</p>
+                    </div>
+                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Total Users Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Total Registered Users</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-kbth-dark-text">2,500</p>
+                    <p class="text-sm mt-2 text-emerald-500">+3.2% <span class="text-kbth-medium-text">vs last month</span></p>
+                </div>
+            </div>
+
+            <!-- Total Lab Requests Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Total Lab Requests</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-kbth-blue">8,900</p>
+                    <p class="text-sm mt-2 text-emerald-500">+5.5% <span class="text-kbth-medium-text">vs last quarter</span></p>
+                </div>
+            </div>
+
+            <!-- Pending Actions Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Pending Critical Actions</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-kbth-red">18</p>
+                    <p class="text-sm mt-2 text-kbth-red">+2 today</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section for Super Admin -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- User Role Distribution Chart -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">User Role Distribution</h2>
+                <div class="h-64">
+                    <canvas id="userRoleDistributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- System Uptime Chart -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">System Uptime (Last 7 Days)</h2>
+                <div class="h-64">
+                    <canvas id="systemUptimeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Management & System Configuration Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Recent User Registrations -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Recent User Registrations</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">User</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Role</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Michael Botwe</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Requester</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span><span class="relative">Pending</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold mr-3">Approve</button>
+                                    <button class="text-kbth-red hover:underline text-sm font-semibold">Reject</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Dr. Serwaa Asamoah</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Admin</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-emerald-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-emerald-200 opacity-50 rounded-full"></span><span class="relative">Approved</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold mr-3">View</button>
+                                    <button class="text-kbth-red hover:underline text-sm font-semibold">Deactivate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- System Health & Logs -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">System Health & Logs</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">Log ID</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Event</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Timestamp</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg">Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">LOG-001</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Database Connection Error</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-29 14:30</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span><span class="relative">Critical</span></span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">LOG-002</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">User Login Success: admin</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-29 14:25</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-emerald-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-emerald-200 opacity-50 rounded-full"></span><span class="relative">Info</span></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 text-center">
+                    <button class="bg-kbth-blue text-white py-2 px-6 rounded-lg font-semibold text-lg hover:bg-kbth-green transition duration-200 shadow-md">View Full Logs</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Settings & Security Configurations -->
+        <div class="grid grid-cols-1 gap-6">
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Global Settings & Security Configurations</h2>
+                <form class="space-y-6">
+                    <div>
+                        <label for="systemName" class="block text-kbth-medium-text text-base font-medium mb-2">System Name:</label>
+                        <input type="text" id="systemName" name="systemName" value="Oxygen Lab Referral System" disabled
+                               class="w-full px-4 py-2 border border-kbth-subtle rounded-md bg-gray-100 text-gray-600 cursor-not-allowed text-base">
+                    </div>
+                    <div>
+                        <label for="defaultTheme" class="block text-kbth-medium-text text-base font-medium mb-2">Default UI Theme:</label>
+                        <select id="defaultTheme" name="defaultTheme"
+                                class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue bg-white text-base">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="securityLevel" class="block text-kbth-medium-text text-base font-medium mb-2">Security Level:</label>
+                        <select id="securityLevel" name="securityLevel"
+                                class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue bg-white text-base">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-kbth-medium-text text-base font-medium">Enable Two-Factor Authentication (2FA) for Admins:</span>
+                        <label for="2faToggle" class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="2faToggle" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-kbth-blue rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-kbth-blue"></div>
+                        </label>
+                    </div>
+                    <button type="submit" class="w-full bg-kbth-blue text-white py-3 rounded-lg font-semibold text-xl hover:bg-kbth-green transition duration-200 shadow-md">Save Global Settings</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // User Role Distribution Chart
+            const userRoleDistributionCtx = document.getElementById('userRoleDistributionChart').getContext('2d');
+            new Chart(userRoleDistributionCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Requesters', 'Admins', 'Mobile Lab Team', 'Super Admins'],
+                    datasets: [{
+                        data: [1800, 400, 250, 50],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'User Role Distribution'
+                        }
+                    }
+                }
+            });
+
+            // System Uptime Chart
+            const systemUptimeCtx = document.getElementById('systemUptimeChart').getContext('2d');
+            new Chart(systemUptimeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                    datasets: [{
+                        label: 'Uptime Percentage',
+                        data: [99.8, 99.9, 100, 99.7, 99.9, 100, 99.8],
+                        fill: false,
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'System Uptime (Last 7 Days)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

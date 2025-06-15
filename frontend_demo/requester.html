@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requester Dashboard - Oxygen Lab Referral System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --kbth-green: #007A33; /* Dark green from the logo */
+            --kbth-blue: #004B8D;  /* Dark blue from the logo */
+            --kbth-red: #E30613;   /* Red from the logo */
+            --kbth-light-gray: #F8F9FA; /* Light background */
+            --kbth-dark-text: #343A40; /* Dark text */
+            --kbth-medium-text: #6C757D; /* Medium gray text */
+        }
+
+        .bg-kbth-light-gray {
+            background-color: var(--kbth-light-gray);
+        }
+        .bg-kbth-green {
+            background-color: var(--kbth-green);
+        }
+        .bg-kbth-blue {
+            background-color: var(--kbth-blue);
+        }
+        .bg-kbth-red {
+            background-color: var(--kbth-red);
+        }
+        .text-kbth-green {
+            color: var(--kbth-green);
+        }
+        .text-kbth-blue {
+            color: var(--kbth-blue);
+        }
+        .text-kbth-red {
+            color: var(--kbth-red);
+        }
+        .text-kbth-dark-text {
+            color: var(--kbth-dark-text);
+        }
+        .text-kbth-medium-text {
+            color: var(--kbth-medium-text);
+        }
+        .border-kbth-subtle {
+            border-color: #DEE2E6;
+        }
+        .shadow-kbth {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 220px;
+                min-width: 220px;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .content-area {
+                margin-left: 0;
+            }
+        }
+        body{
+            zoom:90%;
+        }
+    </style>
+</head>
+<body class="bg-kbth-light-gray font-sans flex">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-white rounded-lg shadow-kbth flex flex-col h-screen m-4 p-6">
+        <div class="flex items-center mb-10">
+            <img src="./assets/kbth_logo.png" alt="KBTH Logo" class="h-10 w-10 mr-3 rounded-full">
+            <span class="text-2xl font-bold text-kbth-dark-text">Oxygen Lab</span>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <ul>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-dark-text bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 mr-4 text-kbth-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6a2 2 0 012-2h2zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2a2 2 0 012-2h2z"></path></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-8v8m-4-8v8M4 16h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                        Transactions
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a4 4 0 00-4-4H9a4 4 0 00-4 4v1z"></path></svg>
+                        Patients
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200 relative">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h10M14 6H9a2 2 0 00-2 2v4a2 2 0 002 2h5l4 4V7a2 2 0 00-2-2z"></path></svg>
+                        Message
+                        <span class="ml-auto px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded-full">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Campaign
+                    </a>
+                </li>
+            </ul>
+            <ul class="mt-8 pt-8 border-t border-gray-200 space-y-2">
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                        User Guide
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V7a3 3 0 013-3h5a3 3 0 013 3v1"></path></svg>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+      
+
+      
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-kbth p-5 mb-8 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-kbth-dark-text">Dashboard</h1>
+            <div class="flex items-center flex-1 justify-end space-x-6">
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" placeholder="Search" class="w-full py-2 pl-10 pr-4 rounded-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-200 text-lg">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <img src="./assets/avatar.jpg" alt="User Avatar" class="h-12 w-12 rounded-full border-2 border-kbth-blue">
+                    <div class="text-right">
+                        <p class="font-semibold text-lg text-kbth-dark-text">Benjamin</p>
+                        <p class="text-sm text-kbth-medium-text">@requester</p>
+                    </div>
+                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Total Requests Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Total Requests</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-kbth-dark-text">150</p>
+                    <p class="text-sm mt-2 text-emerald-500">+5.2% <span class="text-kbth-medium-text">vs last month</span></p>
+                </div>
+            </div>
+
+            <!-- Pending Results Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Pending Results</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-orange-500">12</p>
+                    <p class="text-sm mt-2 text-kbth-red">-2.1% <span class="text-kbth-medium-text">vs last month</span></p>
+                </div>
+            </div>
+
+            <!-- Completed Requests Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-kbth-medium-text">Completed Requests</h3>
+                        <button class="text-gray-400 hover:text-gray-600"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                    </div>
+                    <p class="text-5xl font-bold text-emerald-500">138</p>
+                    <p class="text-sm mt-2 text-emerald-500">+8.5% <span class="text-kbth-medium-text">vs last month</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- New Lab Request Form Card -->
+            <div class="lg:col-span-1 bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">New Lab Request</h2>
+                <form class="space-y-5">
+                    <div>
+                        <label for="patientName" class="block text-kbth-medium-text text-base font-medium mb-2">Patient Name:</label>
+                        <input type="text" id="patientName" name="patientName" placeholder="e.g., Jane Doe" required
+                               class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-base">
+                    </div>
+                    <div>
+                        <label for="testType" class="block text-kbth-medium-text text-base font-medium mb-2">Select Test:</label>
+                        <select id="testType" name="testType"
+                                class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue bg-white text-base">
+                            <option value="">-- Select a Test --</option>
+                            <option value="cbc">Complete Blood Count (CBC)</option>
+                            <option value="urinalysis">Urinalysis</option>
+                            <option value="lipid_panel">Lipid Panel</option>
+                            <option value="fasting_glucose">Fasting Glucose</option>
+                            <option value="liver_function">Liver Function Test (LFT)</option>
+                            <option value="kidney_function">Kidney Function Test (KFT)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="urgency" class="block text-kbth-medium-text text-base font-medium mb-2">Urgency:</label>
+                        <select id="urgency" name="urgency"
+                                class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue bg-white text-base">
+                            <option value="routine">Routine</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="stat">STAT (Emergency)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="notes" class="block text-kbth-medium-text text-base font-medium mb-2">Additional Notes (e.g., symptoms, medication):</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Any relevant information for the lab..."
+                                  class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-base"></textarea>
+                    </div>
+                    <div>
+                        <label for="prescription" class="block text-kbth-medium-text text-base font-medium mb-2">Upload Prescription/Referral (PDF, JPG, PNG):</label>
+                        <input type="file" id="prescription" name="prescription" accept=".pdf,.jpg,.jpeg,.png"
+                               class="w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold mb-3 text-kbth-dark-text">Sample Collection Method:</h3>
+                    <div class="flex flex-col space-y-3">
+                        <div>
+                            <input type="radio" id="sendSample" name="collectionMethod" value="send" checked class="mr-2">
+                            <label for="sendSample" class="text-kbth-medium-text text-base">I will send the sample to KBTH Lab</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="requestPickup" name="collectionMethod" value="pickup" class="mr-2">
+                            <label for="requestPickup" class="text-kbth-medium-text text-base">Request Sample Pick-up (Mobile Lab Team)</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="mobileLab" name="collectionMethod" value="mobile" class="mr-2">
+                            <label for="mobileLab" class="text-kbth-medium-text text-base">Request Mobile Lab Service (on-site collection)</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-kbth-blue text-white py-3 rounded-lg font-semibold text-xl hover:bg-kbth-green transition duration-200 shadow-md">Submit Lab Request</button>
+                </form>
+            </div>
+
+            <!-- My Request Tracker Card -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">My Request Tracker</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">Request ID</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Patient</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Test</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Last Update</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">KBTH-2024-001</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Ama Serwaa</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">CBC</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-purple-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-purple-200 opacity-50 rounded-full"></span><span class="relative">Processing</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-29</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold">View Details</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">KBTH-2024-002</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Kwame Nkrumah</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Urinalysis</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-emerald-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-emerald-200 opacity-50 rounded-full"></span><span class="relative">Completed</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-28</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold">Download Report</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">KBTH-2024-003</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Grace Mensah</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Lipid Panel</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span><span class="relative">Pending Approval</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-29</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold">View Details</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">KBTH-2024-004</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Accra Clinic</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Fasting Glucose</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-kbth-blue leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span><span class="relative">Sample Received</span></span></td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">2024-07-27</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                    <button class="text-kbth-blue hover:underline text-sm font-semibold">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart for Request Status Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Request Status Overview</h2>
+                <div class="h-64">
+                    <canvas id="requestStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('requestStatusChart').getContext('2d');
+            const requestStatusChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Processing', 'Completed', 'Pending Approval', 'Sample Received'],
+                    datasets: [{
+                        data: [50, 138, 12, 60],
+                        backgroundColor: [
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(54, 162, 235, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Request Status Overview'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

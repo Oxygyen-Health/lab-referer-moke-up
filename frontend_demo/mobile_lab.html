@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Lab Team Dashboard - Oxygen Lab Referral System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --kbth-green: #007A33; /* Dark green from the logo */
+            --kbth-blue: #004B8D;  /* Dark blue from the logo */
+            --kbth-red: #E30613;   /* Red from the logo */
+            --kbth-light-gray: #F8F9FA; /* Light background */
+            --kbth-dark-text: #343A40; /* Dark text */
+            --kbth-medium-text: #6C757D; /* Medium gray text */
+        }
+
+        .bg-kbth-light-gray {
+            background-color: var(--kbth-light-gray);
+        }
+        .bg-kbth-green {
+            background-color: var(--kbth-green);
+        }
+        .bg-kbth-blue {
+            background-color: var(--kbth-blue);
+        }
+        .bg-kbth-red {
+            background-color: var(--kbth-red);
+        }
+        .text-kbth-green {
+            color: var(--kbth-green);
+        }
+        .text-kbth-blue {
+            color: var(--kbth-blue);
+        }
+        .text-kbth-red {
+            color: var(--kbth-red);
+        }
+        .text-kbth-dark-text {
+            color: var(--kbth-dark-text);
+        }
+        .text-kbth-medium-text {
+            color: var(--kbth-medium-text);
+        }
+        .border-kbth-subtle {
+            border-color: #DEE2E6;
+        }
+        .shadow-kbth {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 220px;
+                min-width: 220px;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .content-area {
+                margin-left: 0;
+            }
+        }
+        body{
+            zoom:90%;
+        }
+    </style>
+</head>
+<body class="bg-kbth-light-gray font-sans flex">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-white rounded-lg shadow-kbth flex flex-col h-screen m-4 p-6">
+        <div class="flex items-center mb-10">
+            <img src="./assets/kbth_logo.png" alt="KBTH Logo" class="h-10 w-10 mr-3 rounded-full">
+            <span class="text-2xl font-bold text-kbth-dark-text">Oxygen Lab</span>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <ul>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-dark-text bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 mr-4 text-kbth-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6a2 2 0 012-2h2zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm14 0a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2a2 2 0 012-2h2z"></path></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-8v8m-4-8v8M4 16h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        My Schedule
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                        Sample Pickups
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a4 4 0 00-4-4H9a4 4 0 00-4 4v1z"></path></svg>
+                        Mobile Lab Services
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200 relative">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h10M14 6H9a2 2 0 00-2 2v4a2 2 0 002 2h5l4 4V7a2 2 0 00-2-2z"></path></svg>
+                        Messages
+                        <span class="ml-auto px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded-full">2</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="mt-8 pt-8 border-t border-gray-200 space-y-2">
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                        User Guide
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a8.672 8.672 0 00-1.65-.672V2.684a1 1 0 00-1.233-.974l-2.408.79a1 1 0 00-.77 1.219l.732 2.22A8.995 8.995 0 003 9.47v.88a8.995 8.995 0 001.375 4.678l-.732 2.22a1 1 0 00.77 1.219l2.408.79a1 1 0 001.233-.974v-5.891a8.672 8.672 0 001.65-.672zm7.544-2.846A8.672 8.672 0 0017.772 9.247v5.891a1 1 0 001.233.974l2.408-.79a1 1 0 00.77-1.219l-.732-2.22A8.995 8.995 0 0021 10.359v-.88a8.995 8.995 0 00-1.375-4.678l.732-2.22a1 1 0 00-.77-1.219l-2.408-.79a1 1 0 00-1.233.974v5.891z"></path></svg>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html" class="flex items-center p-3 text-lg font-medium text-kbth-medium-text hover:bg-gray-100 rounded-lg transition duration-200">
+                        <svg class="h-6 w-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V7a3 3 0 013-3h5a3 3 0 013 3v1"></path></svg>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+       
+
+        <div class="mt-4 text-center text-sm text-gray-500">
+            <a href="index.html" class="text-red-500 hover:underline">
+                Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-kbth p-5 mb-8 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-kbth-dark-text">Mobile Lab Team Dashboard</h1>
+            <div class="flex items-center flex-1 justify-end space-x-6">
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" placeholder="Search" class="w-full py-2 pl-10 pr-4 rounded-full bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-200 text-lg">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <img src="./assets/avatar.jpg" alt="User Avatar" class="h-12 w-12 rounded-full border-2 border-kbth-blue">
+                    <div class="text-right">
+                        <p class="font-semibold text-lg text-kbth-dark-text">Dr. Kofi</p>
+                        <p class="text-sm text-kbth-medium-text">@mobilelab</p>
+                    </div>
+                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Scheduled Pickups Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Scheduled Sample Pickups</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">Request ID</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Patient/Clinic</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Location</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Scheduled Time</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">PICK-001</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Jane Doe (Home)</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Accra, Osu</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Today, 10:00 AM</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span><span class="relative">Pending</span></span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">PICK-002</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Grace Hospital</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Kumasi, Adum</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Today, 02:00 PM</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-emerald-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-emerald-200 opacity-50 rounded-full"></span><span class="relative">Completed</span></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pending Mobile Lab Service Requests Card -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Pending Mobile Lab Service Requests</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">Request ID</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Patient</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Service Type</th>
+                                <th class="px-5 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">MBL-001</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Kofi Mensah</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Blood Sample Collection</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-purple-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-purple-200 opacity-50 rounded-full"></span><span class="relative">New</span></span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">MBL-002</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Adwoa Brown</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">Urinalysis & Consultation</td>
+                                <td class="px-5 py-4 border-b border-gray-200 bg-white text-base"><span class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight"><span aria-hidden="true" class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span><span class="relative">Assigned</span></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section for Mobile Lab -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Pickup Status Distribution Chart -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Pickup Status Distribution</h2>
+                <div class="h-64">
+                    <canvas id="pickupStatusChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Service Requests by Type Chart -->
+            <div class="bg-white rounded-lg shadow-kbth p-6">
+                <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Service Requests by Type</h2>
+                <div class="h-64">
+                    <canvas id="serviceRequestsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Status Section -->
+        <div class="bg-white rounded-lg shadow-kbth p-6 mb-8">
+            <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Update Request Status</h2>
+            <form class="space-y-5">
+                <div>
+                    <label for="requestId" class="block text-kbth-medium-text text-base font-medium mb-2">Request ID:</label>
+                    <input type="text" id="requestId" name="requestId" placeholder="Enter Request ID (e.g., PICK-001 or MBL-001)" required
+                           class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-base">
+                </div>
+                <div>
+                    <label for="updateStatus" class="block text-kbth-medium-text text-base font-medium mb-2">Update Status to:</label>
+                    <select id="updateStatus" name="updateStatus"
+                            class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue bg-white text-base">
+                        <option value="">-- Select Status --</option>
+                        <option value="en_route">En Route</option>
+                        <option value="arrived">Arrived at Location</option>
+                        <option value="sample_collected">Sample Collected</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="notes" class="block text-kbth-medium-text text-base font-medium mb-2">Notes (Optional):</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Add any relevant notes..."
+                              class="w-full px-4 py-2 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-base"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-kbth-blue text-white py-3 rounded-lg font-semibold text-xl hover:bg-kbth-green transition duration-200 shadow-md">Update Status</button>
+            </form>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class="bg-white rounded-lg shadow-kbth p-6">
+            <h2 class="text-xl font-semibold text-kbth-dark-text mb-6">Quick Actions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="bg-kbth-green text-white py-3 rounded-lg font-semibold text-lg hover:bg-emerald-700 transition duration-200 shadow-md">View Daily Route Map</button>
+                <button class="bg-kbth-blue text-white py-3 rounded-lg font-semibold text-lg hover:bg-kbth-green transition duration-200 shadow-md">Report an Issue</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pickup Status Distribution Chart
+            const pickupStatusCtx = document.getElementById('pickupStatusChart').getContext('2d');
+            new Chart(pickupStatusCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Pending', 'Completed', 'En Route', 'Cancelled'],
+                    datasets: [{
+                        data: [5, 12, 3, 1],
+                        backgroundColor: [
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 99, 132, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Pickup Status Distribution'
+                        }
+                    }
+                }
+            });
+
+            // Service Requests by Type Chart
+            const serviceRequestsCtx = document.getElementById('serviceRequestsChart').getContext('2d');
+            new Chart(serviceRequestsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Blood Sample Collection', 'Urinalysis & Consultation', 'Vital Signs Check', 'Vaccination'],
+                    datasets: [{
+                        label: 'Number of Requests',
+                        data: [8, 4, 2, 1],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 206, 86, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Service Requests by Type'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxygen Lab Referral System Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --kbth-green: #007A33; /* Dark green from the logo */
+            --kbth-blue: #004B8D;  /* Dark blue from the logo */
+            --kbth-red: #E30613;   /* Red from the logo */
+            --kbth-light-gray: #F8F9FA; /* Light background */
+            --kbth-dark-text: #343A40; /* Dark text */
+            --kbth-medium-text: #6C757D; /* Medium gray text */
+        }
+
+        .bg-kbth-light-gray {
+            background-color: var(--kbth-light-gray);
+        }
+        .bg-kbth-green {
+            background-color: var(--kbth-green);
+        }
+        .bg-kbth-blue {
+            background-color: var(--kbth-blue);
+        }
+        .bg-kbth-red {
+            background-color: var(--kbth-red);
+        }
+        .text-kbth-green {
+            color: var(--kbth-green);
+        }
+        .text-kbth-blue {
+            color: var(--kbth-blue);
+        }
+        .text-kbth-red {
+            color: var(--kbth-red);
+        }
+        .text-kbth-dark-text {
+            color: var(--kbth-dark-text);
+        }
+        .text-kbth-medium-text {
+            color: var(--kbth-medium-text);
+        }
+        .border-kbth-subtle {
+            border-color: #DEE2E6;
+        }
+        .shadow-kbth {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-kbth-light-gray flex items-center justify-center min-h-screen font-sans">
+    <div class="bg-white p-8 rounded-lg shadow-kbth w-full max-w-md text-center">
+        <div class="flex justify-center mb-6">
+            <img src="./assets/kbth_logo.png" alt="KBTH Logo" class="h-24 w-24">
+        </div>
+        <h2 class="text-3xl font-bold text-kbth-dark-text mb-2">Welcome Back!</h2>
+        <p class="text-kbth-medium-text mb-8">Sign in to your account</p>
+        
+        <form class="space-y-6">
+            <div>
+                <input type="email" id="email" name="email" placeholder="Email Address" required
+                       class="w-full px-5 py-3 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-lg">
+            </div>
+            <div>
+                <input type="password" id="password" name="password" placeholder="Password" required
+                       class="w-full px-5 py-3 border border-kbth-subtle rounded-md focus:outline-none focus:ring-2 focus:ring-kbth-blue text-lg">
+            </div>
+            <div class="flex items-center justify-between text-kbth-medium-text text-sm">
+                <label class="flex items-center">
+                    <input type="checkbox" name="remember" class="mr-2 h-4 w-4 text-kbth-blue rounded border-gray-300 focus:ring-kbth-blue">
+                    Remember Me
+                </label>
+                <a href="#" class="text-kbth-blue hover:underline">Forgot Password?</a>
+            </div>
+            <button type="submit" class="w-full bg-kbth-blue text-white py-3 rounded-lg font-semibold text-xl hover:bg-kbth-green transition duration-200 shadow-md">Login</button>
+        </form>
+        
+        <p class="mt-8 text-kbth-medium-text text-base">Don't have an account? <a href="#" class="text-kbth-blue hover:underline font-semibold">Register Here</a></p>
+        
+        <div class="mt-10 text-kbth-medium-text text-sm">
+            <p>&copy; 2024 Oxygen Lab Referral System. All rights reserved.</p>
+        </div>
+
+        <hr class="my-8 border-t border-gray-300">
+        <h3 class="text-center text-kbth-dark-text text-2xl font-semibold mb-6">Explore Demos:</h3>
+        <div class="flex flex-col space-y-4">
+            <a href="requester.html" class="block bg-gray-200 text-kbth-dark-text py-3 rounded-lg font-semibold text-lg text-center hover:bg-gray-300 transition duration-200">Requester Portal</a>
+            <a href="admin.html" class="block bg-gray-200 text-kbth-dark-text py-3 rounded-lg font-semibold text-lg text-center hover:bg-gray-300 transition duration-200">KBTH Admin Portal</a>
+            <a href="mobile_lab.html" class="block bg-gray-200 text-kbth-dark-text py-3 rounded-lg font-semibold text-lg text-center hover:bg-gray-300 transition duration-200">Mobile Lab Team</a>
+            <a href="super_admin.html" class="block bg-gray-200 text-kbth-dark-text py-3 rounded-lg font-semibold text-lg text-center hover:bg-gray-300 transition duration-200">Super Admin</a>
+        </div>
+    </div>
+</body>
+</html> 
